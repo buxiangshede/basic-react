@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 
+// 将逻辑抽离出来  符合函数编程的规范
 const useCinemaList = () => {
   const [cinemaList, setCinemaList] = useState([]);
   useEffect(() => {
