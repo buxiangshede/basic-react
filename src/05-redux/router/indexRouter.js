@@ -3,6 +3,7 @@ import Films from "../views/Films";
 import Cinemas from "../views/Cinemas";
 import Center from "../views/Center";
 import NotFound from "../views/NotFound";
+import Layout from "../views/Layout";
 import Films1 from "../views/films/Films1";
 import Films2 from "../views/films/Films2";
 
@@ -11,7 +12,7 @@ function MRouter() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path="/">
+          <Route path="/" element={<Layout />}>
             <Route
               path="/"
               element={<Navigate replace={true} to="./films" />}
