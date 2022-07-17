@@ -22,10 +22,6 @@ app.get("/api/cinemaList", (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
 app.listen("3006", () => {
   console.log("Server is running on port 3006");
 });

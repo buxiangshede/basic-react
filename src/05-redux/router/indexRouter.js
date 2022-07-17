@@ -6,8 +6,14 @@ import NotFound from "../views/NotFound";
 import Layout from "../views/Layout";
 import Films1 from "../views/films/Films1";
 import Films2 from "../views/films/Films2";
+import Details from "../views/Details";
+import Login from "../views/Login";
 
 function MRouter() {
+  const user = () => {
+    return localStorage.getItem("token") || false;
+  };
+  console.log("user", user());
   return (
     <div className="App">
       <BrowserRouter>
@@ -26,7 +32,14 @@ function MRouter() {
               <Route path="/films/sooncoming" element={<Films2 />}></Route>
             </Route>
             <Route path="/cinemas" element={<Cinemas />}></Route>
-            <Route path="/center" element={<Center />}></Route>
+            <Route
+              path="/center"
+              element={
+                user() ? <Center /> : <Navigate to="/login" replace={true} />
+              }
+            ></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/details/:id" element={<Details />}></Route>
             <Route path="*" element={<NotFound />}></Route>
           </Route>
         </Routes>
