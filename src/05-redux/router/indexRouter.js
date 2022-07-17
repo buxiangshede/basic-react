@@ -9,6 +9,8 @@ import Films2 from "../views/films/Films2";
 import Details from "../views/Details";
 import Login from "../views/Login";
 
+//BrowserRouter 没有#路径 真正朝后端发请求要页面，后端没有对应的路径，就好404，要建议后端指向index.html
+
 function MRouter() {
   const user = () => {
     return localStorage.getItem("token") || false;
