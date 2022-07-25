@@ -1,15 +1,27 @@
+import { useEffect, useState, useMemo } from "react";
 import store from "../redux/store";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 import getCinemaAction from "../redux/actionCreator/getCinemaAction";
 
-export default function Cinemas() {
-  const navigate = useNavigate();
-  const [cityName] = useState(store.getState().CityReducer.cityName);
+const useFilter = (cinemaList, mytext) => {
+  const getCimemaList = useMemo(
+    () =>
+      cinemaList.filter(
+        (ele) =>
+          ele.name.toUpperCase().includes(mytext.toUpperCase()) ||
+          ele.address.toUpperCase().includes(mytext.toUpperCase())
+      ),
+    [cinemaList, mytext]
+  );
+  return { getCimemaList };
+};
+
+export default function Search() {
+  const [info, setInfo] = useState("");
   const [cinemaList, setCinemaList] = useState(
     store.getState().CinemaListReducer.list
   );
-
+  const { getCimemaList } = useFilter(cinemaList, info);
   useEffect(() => {
     if (store.getState().CinemaListReducer.list.length === 0) {
       store.dispatch(getCinemaAction());
@@ -23,27 +35,14 @@ export default function Cinemas() {
     };
   }, []);
   return (
-    <>
-      <div style={{ overflow: "hidden" }}>
-        <div
-          style={{ float: "left" }}
-          onClick={() => {
-            navigate("/city");
-          }}
-        >
-          {cityName}
-        </div>
-        <div
-          style={{ float: "right" }}
-          onClick={() => {
-            navigate("/cinemas/search");
-          }}
-        >
-          搜索
-        </div>
-      </div>
-
-      {cinemaList.map((c) => {
+    <div>
+      <input
+        value={info}
+        onChange={(event) => {
+          setInfo(event.target.value);
+        }}
+      />
+      {getCimemaList.map((c) => {
         return (
           <dl key={c.cinemaId}>
             <dt> {c.name}</dt>
@@ -51,6 +50,6 @@ export default function Cinemas() {
           </dl>
         );
       })}
-    </>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 import axios from "axios";
-
+// redux-thunk
 export default function getCinemaAction() {
   return (dispatch) => {
     axios.get("/api/cinemaList").then((response) => {
