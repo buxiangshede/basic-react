@@ -3,6 +3,7 @@
 
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
+import reduxPromise from "redux-promise";
 
 import TabbarReducer from "./reducer/TabbarReducer";
 import CityReducer from "./reducer/CityReducer";
@@ -14,7 +15,7 @@ const reducer = combineReducers({
   CinemaListReducer,
 });
 
-const store = createStore(reducer, applyMiddleware(reduxThunk));
+const store = createStore(reducer, applyMiddleware(reduxThunk, reduxPromise));
 
 console.log("Starting", store);
 
