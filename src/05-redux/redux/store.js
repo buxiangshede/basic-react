@@ -1,7 +1,7 @@
 // 1.引入 redux
 // 2. createStore(reducer)
 
-import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import reduxThunk from "redux-thunk";
 import reduxPromise from "redux-promise";
 
@@ -15,7 +15,17 @@ const reducer = combineReducers({
   CinemaListReducer,
 });
 
-const store = createStore(reducer, applyMiddleware(reduxThunk, reduxPromise));
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  reducer,
+  composeEnhancers(applyMiddleware(reduxThunk, reduxPromise))
+);
+
+// const store = createStore(
+//   reducer,
+//   applyMiddleware(reduxThunk, reduxPromise),
+//   compose
+// );
 
 console.log("Starting", store);
 
