@@ -7,7 +7,7 @@ export default function Films1() {
   const navigate = useNavigate();
   useEffect(() => {
     axios({
-      url: "/api/cinemaList",
+      url: "/api/playList",
     }).then((response) => {
       setList(response.data.results);
     });

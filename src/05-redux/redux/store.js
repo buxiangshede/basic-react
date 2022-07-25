@@ -1,43 +1,20 @@
 // 1.引入 redux
 // 2. createStore(reducer)
 
-// import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
-import { createStore } from "redux";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import reduxThunk from "redux-thunk";
 
-const reducer = (prevState = { show: true }, action) => {
-  const newState = { ...prevState };
-  switch (action.type) {
-    case "SHOW":
-      newState.show = true;
-      return newState;
-    case "HIDDEN":
-      newState.show = false;
-      return newState;
-    default:
-      return prevState;
-  }
-};
+import TabbarReducer from "./reducer/TabbarReducer";
+import CityReducer from "./reducer/CityReducer";
+import CinemaListReducer from "./reducer/CinemaListReducer";
 
-// const reducer = {
-//   auth: todoReducer,
-// };
+const reducer = combineReducers({
+  TabbarReducer,
+  CityReducer,
+  CinemaListReducer,
+});
 
-// const listenerMiddleware = createListenerMiddleware();
-
-// const store = configureStore({
-//   reducer,
-//   preloadedState: {
-//     auth: {
-//       // accessToken,
-//       // refreshToken,
-//     },
-//   },
-//   devTools: process.env.NODE_ENV !== "production",
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware().prepend(listenerMiddleware.middleware),
-// });
-
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(reduxThunk));
 
 console.log("Starting", store);
 

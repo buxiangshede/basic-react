@@ -8,6 +8,7 @@ import Films1 from "../views/films/Films1";
 import Films2 from "../views/films/Films2";
 import Details from "../views/Details";
 import Login from "../views/Login";
+import City from "../views/City";
 
 //BrowserRouter 没有#路径 真正朝后端发请求要页面，后端没有对应的路径，就好404，要建议后端指向index.html
 
@@ -40,6 +41,7 @@ function MRouter() {
                 user() ? <Center /> : <Navigate to="/login" replace={true} />
               }
             ></Route>
+            <Route path="/city" element={<City />}></Route>
             <Route path="/login" element={<Login />}></Route>
             <Route path="/details/:id" element={<Details />}></Route>
             <Route path="*" element={<NotFound />}></Route>
