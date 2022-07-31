@@ -1,27 +1,17 @@
-import store from "../redux/store";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import getCinemaAction from "../redux/actionCreator/getCinemaAction";
+import { connect } from "react-redux";
 
-export default function Cinemas() {
+function Cinemas(props) {
   const navigate = useNavigate();
-  const [cityName] = useState(store.getState().CityReducer.cityName);
-  const [cinemaList, setCinemaList] = useState(
-    store.getState().CinemaListReducer.list
-  );
+  const { list, getCinemaAction, cityName } = props;
 
   useEffect(() => {
-    if (store.getState().CinemaListReducer.list.length === 0) {
-      store.dispatch(getCinemaAction());
+    if (list.length === 0) {
+      getCinemaAction();
     }
-    const unsubscribe = store.subscribe(() => {
-      setCinemaList(store.getState().CinemaListReducer.list);
-    });
-    return () => {
-      // 取消订阅
-      unsubscribe();
-    };
-  }, []);
+  }, [getCinemaAction, list]);
   return (
     <>
       <div style={{ overflow: "hidden" }}>
@@ -43,7 +33,7 @@ export default function Cinemas() {
         </div>
       </div>
 
-      {cinemaList.map((c) => {
+      {list.map((c) => {
         return (
           <dl key={c.cinemaId}>
             <dt> {c.name}</dt>
@@ -54,3 +44,14 @@ export default function Cinemas() {
     </>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    list: state.CinemaListReducer.list,
+    cityName: state.CityReducer.cityName,
+  };
+};
+const mapDispatchToProps = {
+  getCinemaAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cinemas);

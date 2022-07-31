@@ -4,7 +4,7 @@ const reducer = (prevState = { show: true }, action) => {
     case "SHOW":
       newState.show = true;
       return newState;
-    case "HIDDEN":
+    case "HIDE":
       newState.show = false;
       return newState;
     default:

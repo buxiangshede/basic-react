@@ -9,6 +9,15 @@ import TabbarReducer from "./reducer/TabbarReducer";
 import CityReducer from "./reducer/CityReducer";
 import CinemaListReducer from "./reducer/CinemaListReducer";
 
+// import { configureStore } from "@reduxjs/toolkit";
+// import tabbarReducer from "./features/tabbarReducer/tabbarSlice";
+
+// export default configureStore({
+//   reducer: {
+//     tabbar: tabbarReducer,
+//   },
+// });
+
 const reducer = combineReducers({
   TabbarReducer,
   CityReducer,
@@ -20,7 +29,5 @@ const store = createStore(
   reducer,
   composeEnhancers(applyMiddleware(reduxThunk, reduxPromise))
 );
-
-console.log("Starting", store);
 
 export default store;

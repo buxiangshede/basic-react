@@ -1,8 +1,9 @@
 import { useState } from "react";
-import store from "../redux/store";
+// import store from "../redux/store";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 
-export default function City() {
+function City(props) {
   const navigate = useNavigate();
   const [cityList] = useState(["北京", "上海", "广州", "深圳"]);
   return (
@@ -13,10 +14,7 @@ export default function City() {
           <li
             key={ele}
             onClick={() => {
-              store.dispatch({
-                type: "change-city",
-                payload: ele,
-              });
+              props.changeCity(ele);
               navigate("/cinemas");
             }}
           >
@@ -27,3 +25,13 @@ export default function City() {
     </div>
   );
 }
+const mapDispatchToProps = {
+  changeCity: (city) => {
+    return {
+      type: "change-city",
+      payload: city,
+    };
+  },
+};
+
+export default connect(null, mapDispatchToProps)(City);

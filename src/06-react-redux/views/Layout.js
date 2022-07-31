@@ -1,17 +1,9 @@
 import { Outlet } from "react-router-dom";
 import Tabbar from "../components/Tabbar";
-import store from "../redux/store";
-import { useEffect, useState } from "react";
+import { connect } from "react-redux";
 
-export default function Layout() {
-  const [show, setShow] = useState(store.getState().TabbarReducer);
-  console.log(show, "show");
-  useEffect(() => {
-    store.subscribe(() => {
-      setShow(store.getState().TabbarReducer.show);
-      console.log("app", store.getState());
-    });
-  }, []);
+function Layout(props) {
+  const { show } = props;
   return (
     <div>
       <Outlet></Outlet>
@@ -19,3 +11,9 @@ export default function Layout() {
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    show: state.TabbarReducer.show,
+  };
+};
+export default connect(mapStateToProps)(Layout);
