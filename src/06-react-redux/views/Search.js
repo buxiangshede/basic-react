@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
-import store from "../redux/store";
+// import { store } from "../redux/store";
+import { connect } from "react-redux";
 
 import getCinemaAction from "../redux/actionCreator/getCinemaAction";
 
@@ -16,24 +17,16 @@ const useFilter = (cinemaList, mytext) => {
   return { getCimemaList };
 };
 
-export default function Search() {
+function Search(props) {
+  const { getCinemaAction, cinemaList } = props;
   const [info, setInfo] = useState("");
-  const [cinemaList, setCinemaList] = useState(
-    store.getState().CinemaListReducer.list
-  );
   const { getCimemaList } = useFilter(cinemaList, info);
   useEffect(() => {
-    if (store.getState().CinemaListReducer.list.length === 0) {
-      store.dispatch(getCinemaAction());
+    console.log("cinemaList", cinemaList);
+    if (cinemaList.length === 0) {
+      getCinemaAction();
     }
-    const unsubscribe = store.subscribe(() => {
-      setCinemaList(store.getState().CinemaListReducer.list);
-    });
-    return () => {
-      // 取消订阅
-      unsubscribe();
-    };
-  }, []);
+  }, [cinemaList, getCinemaAction]);
   return (
     <div>
       <input
@@ -53,3 +46,11 @@ export default function Search() {
     </div>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    cinemaList: state.CinemaListReducer.list,
+  };
+};
+
+export default connect(mapStateToProps, { getCinemaAction })(Search);
