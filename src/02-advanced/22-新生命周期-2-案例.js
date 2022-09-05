@@ -9,13 +9,14 @@ export default class App extends Component {
   getSnapshotBeforeUpdate() {
     console.log(
       "this.myref.current， getSnapshotBeforeUpdate",
+      this.myref.current.scrollTop,
       this.myref.current.scrollHeight
     );
 
-    return this.myref.current.scrollHeight;
+    return this.myref.current.scrollHeight - this.myref.current.scrollTop;
   }
   componentDidUpdate(prevProps, prevState, value) {
-    this.myref.current.scrollTop += this.myref.current.scrollHeight - value;
+    this.myref.current.scrollTop = this.myref.current.scrollHeight - value;
   }
   render() {
     return (
